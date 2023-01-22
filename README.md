@@ -13,10 +13,11 @@
 
 # Installation
 
-  1. Install [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html):
+  1. Install [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) and Git:
      ```shell 
      sudo apt-get install -y python3-pip
      pip3 install ansible
+     sudo apt-get install git
      ```
   2. Clone this repository: 
      ```shell
