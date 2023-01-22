@@ -1,8 +1,9 @@
 # OpenVPN AWS
 
 **OpenVPN instance**. Which includes 
-[**OpenVPN container**](https://github.com/d3vilh/openvpn-aws/tree/master/openvpn/openvpn-docker) with simple [**WEB UI**](https://github.com/d3vilh/openvpn-ui).
+[**OpenVPN container**](https://github.com/d3vilh/openvpn-aws/tree/master/openvpn/openvpn-docker) with simple [**WEB UI**](https://github.com/d3vilh/openvpn-ui) as lightweight web administration interface:
 
+![OpenVPN WEB UI](/images/OpenVPN-UI-Home.png)
 
 # Requirements
 - [**Amazon AWS EC2 T2 Micro Instance**](https://aws.amazon.com/ec2/instance-types/t2/) 1x CPU Core, 1Gb RAM
@@ -61,16 +62,7 @@
 
   13. Now when you have OpenVPN-UI access over VPN you **MUST** remove OpenVPN-UI Security group profile from you EC2 instance settings. Because of security resons!!!
 
-## Features
-
-[**OpenVPN**](https://openvpn.net) server with subnets support and **OpenVPN-web-ui** as lightweight web administration interface:
-
-![OpenVPN WEB UI](/images/OpenVPN-UI-Home.png)
-
-
 # Usage
-
-## OpenVPN 
 
 **OpenVPN WEB UI** can be accessed on own port (*e.g. http://localhost:8080 , change `localhost` to your EC2's Public or Private IPv4 address*), the default user and password is `admin/gagaZush` preconfigured in `config.yml` which you supposed to [set in](https://github.com/d3vilh/openvpn-aws/blob/master/example.config.yml#L18) `ovpnui_user` & `ovpnui_password` vars, just before the installation.
 
