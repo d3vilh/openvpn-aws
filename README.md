@@ -10,7 +10,7 @@
 - [**Amazon AWS Debian amd64 AMI**](https://wiki.debian.org/Cloud/AmazonEC2Image/Bullseye) Debian Bullseye
 - **At least 8Gb GP2 Storage**
 - **Opened UDP/1194 and TCP/8080** ports (TCP/8080 necessary for [OpenVPN-UI](https://github.com/d3vilh/openvpn-ui) initial configuration only)
-> Theoretically [OpenVPN AWS](https://github.com/d3vilh/openvpn-aws) will run on EC2 T2 Nano Instance (1x CPU Core, 512Mb RAM), but it never tested.
+> Theoretically [OpenVPN AWS](https://github.com/d3vilh/openvpn-aws) will run on EC2 T2 Nano Instance (1x CPU Core, 512Mb RAM), but it was never tested.
 
 # Installation
 
