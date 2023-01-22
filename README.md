@@ -1,7 +1,7 @@
 # OpenVPN AWS
 
 **OpenVPN instance**. Which includes 
-[**OpenVPN container**](https://github.com/d3vilh/raspberry-gateway/tree/master/openvpn/openvpn-docker) with simple [**WEB UI**](https://github.com/d3vilh/openvpn-ui).
+[**OpenVPN container**](https://github.com/d3vilh/openvpn-aws/tree/master/openvpn/openvpn-docker) with simple [**WEB UI**](https://github.com/d3vilh/openvpn-ui).
 
 
 # Requirements
@@ -30,19 +30,19 @@
      ```shell
      ansible-galaxy collection install -r requirements.yml
      ```
-     > If you see `ansible-galaxy: command not found`, you have to relogin (or reboot your Pi) and then try again.
+     > If you see `ansible-galaxy: command not found`, you have to relogin and then try again.
   5. Make copies of the configuration files and modify them for your enviroment:
      ```shell
      yes | cp -p example.inventory.ini inventory.ini 
      yes | cp -p example.config.yml config.yml
      ```
-  6. Modify `inventory.ini` by replace of IP address with your Pi's IP, or comment that line and uncomment the `connection=local` line if you're running it on the Pi you're setting up.
+  6. Modify `inventory.ini` by replace of IP address with your EC2's Public or Private IPv4 address, or comment that line and uncomment the `connection=local` line if you're running it on the EC2 itself.
 
   7. Run installation playbook:
      ```shell
      ansible-playbook main.yml
      ```
-> **If running locally on the Pi**: You may have error like `Error while fetching server API version`. You have to relogin and then run the playbook again.
+> **If running locally on the EC2**: You may have error like `Error while fetching server API version`. You have to relogin and then run the playbook again.
 
 ## Features
 
@@ -59,7 +59,7 @@
 
 ## OpenVPN 
 
-**OpenVPN WEB UI** can be accessed on own port (*e.g. http://localhost:8080 , change `localhost` to your Raspberry host ip/name*), the default user and password is `admin/gagaZush` preconfigured in `config.yml` which you supposed to [set in](https://github.com/d3vilh/openvpn-aws/blob/master/example.config.yml#L18) `ovpnui_user` & `ovpnui_password` vars, just before the installation.
+**OpenVPN WEB UI** can be accessed on own port (*e.g. http://localhost:8080 , change `localhost` to your EC2's Public or Private IPv4 address*), the default user and password is `admin/gagaZush` preconfigured in `config.yml` which you supposed to [set in](https://github.com/d3vilh/openvpn-aws/blob/master/example.config.yml#L18) `ovpnui_user` & `ovpnui_password` vars, just before the installation.
 
 The volume container will be inicialized by using the official OpenVPN `openvpn_openvpn` image with included scripts to automatically generate everything you need  on the first run:
  - Diffie-Hellman parameters
@@ -73,8 +73,6 @@ This setup use `tun` mode, because it works on the widest range of devices. tap 
 The topology used is `subnet`, because it works on the widest range of OS. p2p, for instance, does not work on Windows.
 
 The server config [specifies](https://github.com/d3vilh/openvpn-aws/blob/master/openvpn/config/server.conf#L40) `push redirect-gateway def1 bypass-dhcp`, meaning that after establishing the VPN connection, all traffic will go through the VPN. This might cause problems if you use local DNS recursors which are not directly reachable, since you will try to reach them through the VPN and they might not answer to you. If that happens, use public DNS resolvers like those of OpenDNS (`208.67.222.222` and `208.67.220.220`) or Google (`8.8.4.4` and `8.8.8.8`).
-
-If you wish to use your local Pi-Hole as a DNS server (the one which comes with this setup), you have to modify a [dns-configuration](https://github.com/d3vilh/openvpn-aws/blob/master/openvpn/config/server.conf#L21) with your local Pi-Hole IP address.
 
 ### Generating .OVPN client profiles
 
@@ -205,5 +203,5 @@ All the Server and Client configuration located in Docker volume and can be ease
 |-- staticclients //Directory where stored all the satic clients configuration
 ```
 
-
+Build 22.01.2023 by [d3vilh](https://github.com/d3vilh) for small home project.
 
