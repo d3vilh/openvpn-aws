@@ -1,0 +1,16 @@
+---
+# Location where configuration files will be stored.
+config_dir: '~'
+
+# OpenVPN configuration.
+ovpn_enable: true
+
+ovpnui_user: "aws-admin"
+ovpnui_password: "gagaZush"                     # !Change this password!
+ovpn_trusted_subnet: "10.0.70.0/24"             # Trusted users subnet
+ovpn_guest_subnet: "10.0.71.0/24"               # Guest users subnet
+ovpn_home_subnet: "192.168.88.0/24"             # Your home network subnet
+ovpn_remote: "remote 123.124.125.126 1194 udp"  # OpenVPN client.ovpn profile connect line. You
+
+# OpenVPN monitoring configuration.             # Requires `monitoring_enable`
+openvpn_exporter_enable: false                  # Not functional yet, but in roadmap.
