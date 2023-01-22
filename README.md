@@ -7,7 +7,7 @@
 
 # Requirements
 - [**Amazon AWS EC2 T2 Micro Instance**](https://aws.amazon.com/ec2/instance-types/t2/) 1x CPU Core, 1Gb RAM
-- [**Amazon AWS Debian amd64 AMI**](https://wiki.debian.org/Cloud/AmazonEC2Image/Bullseye) Debian Bullseye
+- [**Amazon AWS Debian amd64 AMI**](https://wiki.debian.org/Cloud/AmazonEC2Image/Bullseye),Debian Bullseye
 - **At least 8Gb GP2 Storage**
 - **Opened UDP/1194 and TCP/8080** ports (TCP/8080 necessary for [OpenVPN-UI](https://github.com/d3vilh/openvpn-ui) initial configuration only)
 > Theoretically [OpenVPN AWS](https://github.com/d3vilh/openvpn-aws) will run on EC2 T2 Nano Instance (1x CPU Core, 512Mb RAM), but it was never tested.
@@ -46,7 +46,7 @@
      ```
 > **If running locally on the EC2**: You may have error like `Error while fetching server API version`. You have to relogin and then run the playbook again.
 
-  8. Now, open your [EC2 console](https://console.aws.amazon.com/ec2/home) and go to "Network & Security" > "Security Groups" to create two new Security groups for opening OpenVPN UDP/1194 and OpenVPN-UI TCP/8080 ports for your EC2 instance.
+  8. Now, open your [EC2 console](https://console.aws.amazon.com/ec2/home) and go to `"Network & Security"` > `"Security Groups"` to create two new Security groups for opening OpenVPN UDP/1194 and OpenVPN-UI TCP/8080 ports for your EC2 instance.
 
   9. Configure Security Group for OpenVPN (to open UDP/1194 port for Public access):
 
@@ -60,7 +60,7 @@
 
   12. **Generate first .OVPN profile** as described below, with **"Trusted"** subnet IP (`10.0.70.0/24`) via OpenVPN-UI web GUI and connect with it, to check your setup.
 
-  13. Now when you have OpenVPN-UI access over VPN you **MUST** remove OpenVPN-UI Security group profile from you EC2 instance settings. Because of security resons!!!
+  13. Now when you have OpenVPN-UI access over VPN you **MUST** remove OpenVPN-UI Security group profile from you EC2 instance settings. **Because of security reasons!!!**
 
 # Usage
 
