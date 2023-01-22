@@ -57,9 +57,9 @@
 
   11. Assign both Security groups to your running EC2 instance.
 
-  12. [Generate first .OVPN profile](https://github.com/d3vilh/openvpn-aws/blob/master/README.md#L86) with **"Trusted"** subnet IP (`10.0.70.0/24`) via OpenVPN-UI web GUI and connect with it, to check your setup.
+  12. **Generate first .OVPN profile** as described below, with **"Trusted"** subnet IP (`10.0.70.0/24`) via OpenVPN-UI web GUI and connect with it, to check your setup.
 
-  13. Now when you have EC2 access over VPN you **MUST** remove OpenVPN-UI  Security group profile from you EC2 instance.
+  13. Now when you have OpenVPN-UI access over VPN you **MUST** remove OpenVPN-UI Security group profile from you EC2 instance settings. Because of security resons!!!
 
 ## Features
 
