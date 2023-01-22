@@ -45,6 +45,22 @@
      ```
 > **If running locally on the EC2**: You may have error like `Error while fetching server API version`. You have to relogin and then run the playbook again.
 
+  8. Now, open your [EC2 console](https://console.aws.amazon.com/ec2/home) and go to "Network & Security" > "Security Groups" to create two new Security groups for opening OpenVPN UDP/1194 and OpenVPN-UI TCP/8080 ports for your EC2 instance.
+
+  9. Configure Security Group for OpenVPN (to open UDP/1194 port for Public access):
+
+  <img src="https://github.com/d3vilh/openvpn-aws/blob/master/images/OpenVPN-EC2-OVPN-Only.png" alt="Opening EC2 Public OVPN Port" width="600" border="1" />
+
+  10. Configure Security Group for OpenVPN-UI (to open TCP/8080 port for Public access):
+
+  <img src="https://github.com/d3vilh/openvpn-aws/blob/master/images/OpenVPN-EC2-UI-Only.png" alt="Opening EC2 Public OpenVPN-UI Port" width="600" border="1" />
+
+  11. Assign both Security groups to your running EC2 instance.
+
+  12. [Generate first .OVPN profile](https://github.com/d3vilh/openvpn-aws/blob/master/README.md#L86) with **"Trusted"** subnet IP (`10.0.70.0/24`) via OpenVPN-UI web GUI and connect with it, to check your setup.
+
+  13. Now when you have EC2 access over VPN you **MUST** remove OpenVPN-UI  Security group profile from you EC2 instance.
+
 ## Features
 
 [**OpenVPN**](https://openvpn.net) server with subnets support and **OpenVPN-web-ui** as lightweight web administration interface:
@@ -116,41 +132,6 @@ To assign desired subnet policy to the specific client, you have to define stati
 
 > Keep in mind, by default, all the clients have full access, so you don't need to specifically configure static IP for your own devices, your home devices always will land to **"Trusted"** subnet by default. 
 
-### Alternative, CLI ways to deal with OpenVPN configuration
-
-To generate new .OVPN profile execute following command. Password as second argument is optional:
-```shell
-sudo docker exec openvpn bash /opt/app/bin/genclient.sh <name> <?password?>
-```
-
-You can find you .ovpn file under `/openvpn/clients/<name>.ovpn`, make sure to check and modify the `remote ip-address`, `port` and `protocol`. It also will appear in `"Certificates"` menue of OpenVPN WEB UI.
-
-Revoking of old .OVPN files can be done via CLI by running following:
-
-```shell
-sudo docker exec openvpn bash /opt/app/bin/rmclient.sh <clientname>
-```
-
-Restart of OpenVPN container can be done via the CLI by running following:
-```shell
-sudo docker-compose restart openvpn
-```
-
-To define static IP, go to `~/openvpn/staticclients` directory and create text file with the name of your client and insert into this file ifrconfig-push option with the desired static IP and mask: `ifconfig-push 10.0.71.2 255.255.255.0`.
-
-For example, if you would like to restrict Home subnet access to your best friend Slava, you should do this:
-
-```shell
-slava@Ukraini:~/openvpn/staticclients $ pwd
-/home/slava/openvpn/staticclients
-slava@Ukraini:~/openvpn/staticclients $ ls -lrt | grep Slava
--rw-r--r-- 1 slava heroi 38 Nov  9 20:53 Slava
-slava@Ukraini:~/openvpn/staticclients $ cat Slava
-ifconfig-push 10.0.71.2 255.255.255.0
-```
-
-> Keep in mind, by default, all the clients have full access, so you don't need to specifically configure static IP for your own devices, your home devices always will land to **"Trusted"** subnet by default. 
-
 ### OpenVPN Pstree structure
 
 All the Server and Client configuration located in Docker volume and can be easely tuned. Here are tree of volume content:
@@ -198,6 +179,42 @@ All the Server and Client configuration located in Docker volume and can be ease
 |   |-- ta.key
 |-- staticclients //Directory where stored all the satic clients configuration
 ```
+
+### Alternative, CLI ways to deal with OpenVPN configuration
+
+To generate new .OVPN profile execute following command. Password as second argument is optional:
+```shell
+sudo docker exec openvpn bash /opt/app/bin/genclient.sh <name> <?password?>
+```
+
+You can find you .ovpn file under `/openvpn/clients/<name>.ovpn`, make sure to check and modify the `remote ip-address`, `port` and `protocol`. It also will appear in `"Certificates"` menue of OpenVPN WEB UI.
+
+Revoking of old .OVPN files can be done via CLI by running following:
+
+```shell
+sudo docker exec openvpn bash /opt/app/bin/rmclient.sh <clientname>
+```
+
+Restart of OpenVPN container can be done via the CLI by running following:
+```shell
+sudo docker-compose restart openvpn
+```
+
+To define static IP, go to `~/openvpn/staticclients` directory and create text file with the name of your client and insert into this file ifrconfig-push option with the desired static IP and mask: `ifconfig-push 10.0.71.2 255.255.255.0`.
+
+For example, if you would like to restrict Home subnet access to your best friend Slava, you should do this:
+
+```shell
+slava@Ukraini:~/openvpn/staticclients $ pwd
+/home/slava/openvpn/staticclients
+slava@Ukraini:~/openvpn/staticclients $ ls -lrt | grep Slava
+-rw-r--r-- 1 slava heroi 38 Nov  9 20:53 Slava
+slava@Ukraini:~/openvpn/staticclients $ cat Slava
+ifconfig-push 10.0.71.2 255.255.255.0
+```
+
+> Keep in mind, by default, all the clients have full access, so you don't need to specifically configure static IP for your own devices, your home devices always will land to **"Trusted"** subnet by default. 
+
 
 Build 22.01.2023 by [d3vilh](https://github.com/d3vilh) for small home project.
 
