@@ -51,10 +51,6 @@
 
 ![OpenVPN WEB UI](/images/OpenVPN-UI-Home.png)
 
-<p align="center">
-<img src="https://github.com/d3vilh/openvpn-aws/blob/master/images/OVPN_VLANs.png" alt="OpenVPN Subnets" width="600" border="1" />
-</p>
-
 
 # Usage
 
@@ -113,26 +109,10 @@ Revoked certificates won't kill active connections, you'll have to restart the s
 
 ### OpenVPN client subnets. Guest and Home users
 
-[OpenVPN-AWS'](https://github.com/d3vilh/openvpn-aws/) OpenVPN server uses `10.0.70.0/24` **"Trusted"** subnet for dynamic clients by default and all the clients connected by default will have full access to your Home network, as well as your home Internet.
-However you can be desired to share VPN access with your friends and restrict access to your Home network for them, but allow to use Internet connection over your VPN. This type of guest clients needs to live in special **"Guest users"** subnet - `10.0.71.0/24`:
-
-<p align="center">
-<img src="https://github.com/d3vilh/openvpn-aws/blob/master/images/OVPN_VLANs.png" alt="OpenVPN Subnets" width="700" border="1" />
-</p>
+[OpenVPN-AWS'](https://github.com/d3vilh/openvpn-aws/) OpenVPN server uses `10.0.70.0/24` **"Trusted"** subnet for dynamic clients by default and all the clients connected by default will have full access to your AWS Private subnet, as well as external Internet access with EC2 Public IP.
+However you can be desired to share VPN access with your friends and restrict access to your AWS Private network for them (so they wont access OpenVPN-UI GUI or other services), but allow to use Internet connection with EC2 Public IP. This type of guest clients needs to live in special **"Guest users"** subnet - `10.0.71.0/24`:
 
 To assign desired subnet policy to the specific client, you have to define static IP address for this client after you generate .OVPN profile.
-To define static IP, go to `~/openvpn/staticclients` directory and create text file with the name of your client and insert into this file ifrconfig-push option with the desired static IP and mask: `ifconfig-push 10.0.71.2 255.255.255.0`.
-
-For example, if you would like to restrict Home subnet access to your best friend Slava, you should do this:
-
-```shell
-slava@Ukraini:~/openvpn/staticclients $ pwd
-/home/slava/openvpn/staticclients
-slava@Ukraini:~/openvpn/staticclients $ ls -lrt | grep Slava
--rw-r--r-- 1 slava heroi 38 Nov  9 20:53 Slava
-slava@Ukraini:~/openvpn/staticclients $ cat Slava
-ifconfig-push 10.0.71.2 255.255.255.0
-```
 
 > Keep in mind, by default, all the clients have full access, so you don't need to specifically configure static IP for your own devices, your home devices always will land to **"Trusted"** subnet by default. 
 
@@ -155,6 +135,21 @@ Restart of OpenVPN container can be done via the CLI by running following:
 ```shell
 sudo docker-compose restart openvpn
 ```
+
+To define static IP, go to `~/openvpn/staticclients` directory and create text file with the name of your client and insert into this file ifrconfig-push option with the desired static IP and mask: `ifconfig-push 10.0.71.2 255.255.255.0`.
+
+For example, if you would like to restrict Home subnet access to your best friend Slava, you should do this:
+
+```shell
+slava@Ukraini:~/openvpn/staticclients $ pwd
+/home/slava/openvpn/staticclients
+slava@Ukraini:~/openvpn/staticclients $ ls -lrt | grep Slava
+-rw-r--r-- 1 slava heroi 38 Nov  9 20:53 Slava
+slava@Ukraini:~/openvpn/staticclients $ cat Slava
+ifconfig-push 10.0.71.2 255.255.255.0
+```
+
+> Keep in mind, by default, all the clients have full access, so you don't need to specifically configure static IP for your own devices, your home devices always will land to **"Trusted"** subnet by default. 
 
 ### OpenVPN Pstree structure
 
