@@ -3,7 +3,3 @@ collections:
   - ansible.posix
   - community.docker
   - community.general
-  - name: install rsync
-    package:
-      name: rsync
-      state: present
