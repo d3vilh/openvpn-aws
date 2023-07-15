@@ -37,29 +37,34 @@
      yes | cp -p example.inventory.ini inventory.ini 
      yes | cp -p example.config.yml config.yml
      ```
-  6. Modify `inventory.ini` by replace of IP address with your EC2's Public or Private IPv4 address, or comment that line and uncomment the `connection=local` line if you're running it on the EC2 itself.
+  6. Run the following command to add the `docker` group if it doesn't exist and add user to the `docker` group:
+     ```shell
+     sudo groupadd docker
+     sudo usermod -aG docker $USER
+     ```
+  7. Modify `inventory.ini` by replace of IP address with your EC2's Public or Private IPv4 address, or comment that line and uncomment the `connection=local` line if you're running it on the EC2 itself.
 
-  7. Run installation playbook:
+  8. Run installation playbook:
      ```shell
      ansible-playbook main.yml
      ```
 > **If running locally on the EC2**: You may have error like `Error while fetching server API version` or `Permission denied`. You have to relogin and then run the playbook again.
 
-  8. Now, open your [EC2 console](https://console.aws.amazon.com/ec2/home) and go to `"Network & Security"` > `"Security Groups"` to create two new Security groups for opening OpenVPN UDP/1194 and OpenVPN-UI TCP/8080 ports for your EC2 instance.
+  9. Now, open your [EC2 console](https://console.aws.amazon.com/ec2/home) and go to `"Network & Security"` > `"Security Groups"` to create two new Security groups for opening OpenVPN UDP/1194 and OpenVPN-UI TCP/8080 ports for your EC2 instance.
 
-  9. Configure Security Group for OpenVPN (to open UDP/1194 port for Public access):
+  10. Configure Security Group for OpenVPN (to open UDP/1194 port for Public access):
 
   <img src="https://github.com/d3vilh/openvpn-aws/blob/master/images/OpenVPN-EC2-OVPN-Only.png" alt="Opening EC2 Public OVPN Port" width="600" border="1" />
 
-  10. Configure Security Group for OpenVPN-UI (to open TCP/8080 port for Public access):
+  11. Configure Security Group for OpenVPN-UI (to open TCP/8080 port for Public access):
 
   <img src="https://github.com/d3vilh/openvpn-aws/blob/master/images/OpenVPN-EC2-UI-Only.png" alt="Opening EC2 Public OpenVPN-UI Port" width="600" border="1" />
 
-  11. Assign both Security groups to your running EC2 instance.
+  12. Assign both Security groups to your running EC2 instance.
 
-  12. **Generate first .OVPN profile** as described below, with **"Trusted"** subnet IP (`10.0.70.0/24`) via OpenVPN-UI web GUI and connect with it, to check your setup.
+  13. **Generate first .OVPN profile** as described below, with **"Trusted"** subnet IP (`10.0.70.0/24`) via OpenVPN-UI web GUI and connect with it, to check your setup.
 
-  13. Now when you have OpenVPN-UI access over VPN you **MUST** remove OpenVPN-UI Security group profile from you EC2 instance settings. **Because of security reasons!!!**
+  14. Now when you have OpenVPN-UI access over VPN you **MUST** remove OpenVPN-UI Security group profile from you EC2 instance settings. **Because of security reasons!!!**
 
 # Usage
 
