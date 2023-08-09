@@ -68,7 +68,7 @@
 
 # Usage
 
-**OpenVPN WEB UI** can be accessed on own port (*e.g. http://localhost:8080 , change `localhost` to your EC2's Public or Private IPv4 address*), the default user and password is `admin/gagaZush` preconfigured in `config.yml` which you supposed to [set in](https://github.com/d3vilh/openvpn-aws/blob/master/example.config.yml#L18) `ovpnui_user` & `ovpnui_password` vars, just before the installation.
+**OpenVPN WEB UI** can be accessed on own port (*e.g. http://localhost:8080 , change `localhost` to your EC2's Public or Private IPv4 address*), the default user and password is `aws-admin/gagaZush` preconfigured in `config.yml` which you supposed to [set in](https://github.com/d3vilh/openvpn-aws/blob/master/example.config.yml#L18) `ovpnui_user` & `ovpnui_password` vars, just before the installation.
 
 The volume container will be inicialized by using the official OpenVPN `openvpn_openvpn` image with included scripts to automatically generate everything you need  on the first run:
  - Diffie-Hellman parameters
