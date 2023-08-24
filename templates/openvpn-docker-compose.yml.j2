@@ -12,14 +12,6 @@ services:
        ports: 
           - "1194:1194/udp"
        environment:
-           EASYRSA_DN: "{{ easyrsa_dn }}"
-           REQ_COUNTRY: "{{ easyrsa_req_country }}"
-           REQ_PROVINCE: "{{ easyrsa_req_province }}"
-           REQ_CITY: "{{ easyrsa_req_city }}"
-           REQ_ORG: "{{ easyrsa_req_org }}"
-           REQ_EMAIL: "{{ easyrsa_req_email }}"
-           REQ_OU: "{{ easyrsa_req_ou }}"
-           REQ_CN: "{{ easyrsa_req_cn }}"
            TRUST_SUB: {{ ovpn_trusted_subnet }}
            GUEST_SUB: {{ ovpn_guest_subnet }}
            HOME_SUB: {{ ovpn_home_subnet }}
