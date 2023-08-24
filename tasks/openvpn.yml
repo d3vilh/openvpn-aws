@@ -23,6 +23,8 @@
   loop:
     - src: openvpn-docker-compose.yml.j2
       dest: docker-compose.yml
+    - src: openvpn-docker-entrypoint.sh.j2
+      dest: openvpn-docker/docker-entrypoint.sh
     - src: openvpn_client.conf.j2
       dest: config/client.conf
     - src: easy-rsa.vars.j2
