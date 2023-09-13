@@ -34,7 +34,6 @@
      > If you see `ansible-galaxy: command not found`, you have to relogin and then try again.
   5. Make copies of the configuration files and modify them for your enviroment:
      ```shell
-     yes | cp -p example.inventory.ini inventory.ini 
      yes | cp -p example.config.yml config.yml
      ```
   6. Run the following command to add the `docker` group if it doesn't exist and add user to the `docker` group:
@@ -42,7 +41,9 @@
      sudo groupadd docker
      sudo usermod -aG docker $USER
      ```
-  7. Modify `inventory.ini` by replace of IP address with your EC2's Public or Private IPv4 address, or comment that line and uncomment the `connection=local` line if you're running it on the EC2 itself.
+  7. **Double check** that `ansible_user` is correct for `inventory.yml`. Need to run installtion on the remote server - follow the recomendations in config file.
+     
+     > **Note**: To make all necesary changes: `nano inventory.yml`, save the file - `Ctrl+O` and `Ctrl+X` to exit.
 
   8. Run installation playbook:
      ```shell

@@ -1,0 +1,16 @@
+all:
+    hosts:
+        openvpn-aws:
+        #  Section One:
+            ansible_host: 192.168.1.1
+            ansible_user: admin
+            ansible_connection: local
+            ansible_use: "yes"
+        #  Section Two:
+            #ansible_host: 192.168.1.1
+            #ansible_user: admin
+            #ansible_connection: ssh
+            #ansible_use: "yes"
+
+# Comment out "Section One" parameters and uncomment "Section Two" to run on remote OpenVPN-AWS enviroment.
+# Double check the ansible_user and ansible_host.

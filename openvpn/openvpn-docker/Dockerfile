@@ -1,6 +1,7 @@
 # Start from Alpine base image
 FROM amd64/alpine
 LABEL maintainer="Mr.Philipp <d3vilh@github.com>"
+LABEL version="0.2"
 
 # Copy all files in the current directory to the /opt/app directory in the container
 COPY . /opt/app
