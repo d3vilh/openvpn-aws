@@ -50,7 +50,7 @@ COPY . /opt/app
 # Set the working directory to /opt/app
 WORKDIR /opt/app
 
-RUN apk --no-cache --no-progress upgrade && apk --no-cache --no-progress add bash bind-tools curl wget ip6tables iptables openvpn easy-rsa
+RUN apk --no-cache --no-progress upgrade && apk --no-cache --no-progress add bash bind-tools curl ip6tables iptables openvpn easy-rsa
 #Install Latest RasyRSA Version
 RUN chmod 755 /usr/share/easy-rsa/*
 
@@ -246,7 +246,7 @@ All the Server and Client configuration located in Docker volume and can be ease
 
 To generate new .OVPN profile execute following command. Password as second argument is optional:
 ```shell
-sudo docker exec openvpn bash /opt/app/bin/genclient.sh <name> <?password?>
+sudo docker exec openvpn bash /opt/app/bin/genclient.sh <name> <?IP?> <?password?>
 ```
 
 You can find you .ovpn file under `/openvpn/clients/<name>.ovpn`, make sure to check and modify the `remote ip-address`, `port` and `protocol`. It also will appear in `"Certificates"` menue of OpenVPN WEB UI.
@@ -254,7 +254,13 @@ You can find you .ovpn file under `/openvpn/clients/<name>.ovpn`, make sure to c
 Revoking of old .OVPN files can be done via CLI by running following:
 
 ```shell
-sudo docker exec openvpn bash /opt/app/bin/rmclient.sh <clientname>
+sudo docker exec openvpn bash /opt/app/bin/revoke.sh <clientname>
+```
+
+Removing of old .OVPN files can be done via CLI by running following:
+
+```shell
+sudo docker exec openvpn bash /opt/app/bin/rmcert.sh <clientname>
 ```
 
 Restart of OpenVPN container can be done via the CLI by running following:
