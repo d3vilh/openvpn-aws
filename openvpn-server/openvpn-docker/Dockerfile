@@ -13,7 +13,6 @@ RUN chmod 755 /usr/share/easy-rsa/*
 
 # Copy all files in the current directory to the /opt/app directory in the container
 COPY bin /opt/app/bin
-COPY config /opt/app/config
 COPY docker-entrypoint.sh /opt/app/docker-entrypoint.sh
 RUN mkdir -p /opt/app/clients \
     /opt/app/db \
