@@ -1,7 +1,7 @@
 ---
 - name: Restart openvpn
   community.docker.docker_compose:
-    project_src: "{{ config_dir }}/openvpn/"
+    project_src: "{{ config_dir }}/openvpn-server/"
     build: false
     restarted: true
   become: false
