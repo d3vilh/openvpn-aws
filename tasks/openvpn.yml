@@ -8,7 +8,7 @@
 
 - name: Synchronize openvpn directory.
   ansible.posix.synchronize:
-    src: openvpn
+    src: openvpn-server
     dest: "{{ config_dir }}/"
     delete: false
     recursive: true

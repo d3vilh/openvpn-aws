@@ -11,6 +11,7 @@ services:
        privileged: true
        ports: 
           - "1194:1194/udp"
+         # - "2080:2080/tcp"  # management port. uncomment if you would like to share it with the host
        environment:
            TRUST_SUB: {{ ovpn_trusted_subnet }}
            GUEST_SUB: {{ ovpn_guest_subnet }}
