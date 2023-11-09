@@ -35,5 +35,5 @@
       when: ovpn_enable
 
     - name: Set up OpenVPN Monitoring.
-      ansible.builtin.import_tasks: tasks/openvpn_exporter.yml
-      when: openvpn_exporter_enable
+      ansible.builtin.import_tasks: tasks/openvpn_monitoring.yml
+      when: monitoring_enable
