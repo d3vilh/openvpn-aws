@@ -26,9 +26,6 @@ services:
       - prometheus_data:/prometheus
     ports:
       - 9090:9090
-    links:
-      - ping:ping
-      - speedtest:speedtest
     networks:
       - back-tier
 
