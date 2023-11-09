@@ -28,6 +28,6 @@ easyrsa_cert_renew: 30                          # Number of days before expirati
 easyrsa_crl_days: 180                           # Number of days until the CRL expires.
 
 # OpenVPN monitoring configuration.             # Requires `monitoring_enable`
-monitoring_enable: true                          # Set true to enable OpenVPN Server monitoring
-monitoring_grafana_admin_password: "admin"       # Is only used the first time when Grafana starts up
-monitoring_days_keep_interval: 90d               # How long to keep data in Prometheus DB (decrease if you have less than 5Gb of free disk space)
+monitoring_enable: false                        # Set true to enable OpenVPN Server monitoring
+monitoring_grafana_admin_password: "admin"      # Is only used the first time when Grafana starts up
+monitoring_days_keep_interval: 90d              # How long to keep data in Prometheus DB (decrease if you have less than 5Gb of free disk space)
