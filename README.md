@@ -111,7 +111,7 @@ In the process of installation these vars will be copied to container volume `/e
 ### Monitoring
 To install OpenVPN Grafana Dashboard you have to set following configuration parameters in `config.yml` file:
 ```shell
-# OpenVPN monitoring configuration.             # Requires `monitoring_enable`
+# OpenVPN monitoring configuration.              # Requires `monitoring_enable`
 monitoring_enable: true                          # Set true to enable OpenVPN Server monitoring
 monitoring_grafana_admin_password: "admin"       # Is only used the first time when Grafana starts up
 monitoring_days_keep_interval: 90d               # How long to keep data in Prometheus DB (decrease if you have less than 5Gb of free disk space)
