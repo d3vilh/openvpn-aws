@@ -104,32 +104,36 @@
         },
         "textMode": "value"
       },
-      "pluginVersion": "10.1.0",
+      "pluginVersion": "10.2.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
             "uid": "P1809F7CD0C75ACF3"
           },
-          "editorMode": "code",
+          "disableTextWrap": false,
+          "editorMode": "builder",
           "exemplar": false,
-          "expr": "time() - container_start_time_seconds{name=\"openvpn\"}",
+          "expr": "openvpn_up - copenvpn_up",
           "format": "time_series",
+          "fullMetaSearch": false,
+          "includeNullMetadata": true,
           "instant": true,
           "interval": "15s",
           "legendFormat": "Count",
           "range": false,
-          "refId": "A"
+          "refId": "A",
+          "useBackend": false
         },
         {
           "conditions": [
             {
               "evaluator": {
                 "params": [
-                  1,
+                  0,
                   0
                 ],
-                "type": "gt"
+                "type": "no_value"
               },
               "operator": {
                 "type": "when"
@@ -209,7 +213,7 @@
         },
         "textMode": "value_and_name"
       },
-      "pluginVersion": "10.1.0",
+      "pluginVersion": "10.2.0",
       "targets": [
         {
           "datasource": {
@@ -277,7 +281,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "10.1.0",
+      "pluginVersion": "10.2.0",
       "targets": [
         {
           "datasource": {
@@ -347,7 +351,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "10.1.0",
+      "pluginVersion": "10.2.0",
       "targets": [
         {
           "datasource": {
@@ -595,7 +599,7 @@
         }
       ],
       "title": "Current OpenVPN Clients",
-      "transform": "table",
+      "transform": "timeseries_to_rows",
       "type": "table-old"
     },
     {
@@ -637,6 +641,7 @@
         "displayMode": "gradient",
         "minVizHeight": 10,
         "minVizWidth": 0,
+        "namePlacement": "auto",
         "orientation": "horizontal",
         "reduceOptions": {
           "calcs": [
@@ -648,7 +653,7 @@
         "showUnfilled": true,
         "valueMode": "color"
       },
-      "pluginVersion": "10.1.0",
+      "pluginVersion": "10.2.0",
       "targets": [
         {
           "datasource": {
@@ -686,8 +691,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -780,8 +784,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -897,8 +900,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "dark-green",
-                "value": null
+                "color": "dark-green"
               }
             ]
           }
@@ -967,8 +969,7 @@
             "mode": "percentage",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               }
             ]
           },
@@ -1069,8 +1070,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1140,7 +1140,6 @@
   ],
   "refresh": "10s",
   "schemaVersion": 38,
-  "style": "dark",
   "tags": [
     "openvpn",
     "raspberry",
@@ -1158,6 +1157,6 @@
   "timezone": "",
   "title": "OpenVPN",
   "uid": "58l7kyvWz",
-  "version": 7,
+  "version": 1,
   "weekStart": ""
 }
