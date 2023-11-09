@@ -48,7 +48,7 @@
     mode: '0644'
   become: false
   notify: Restart raspi-monitoring
-  when: openvpn_monitoring_enable
+  when: monitoring_enable
 
 # WA for 60sec TMO bug
 - name: Pull latest Grafana Docker image
