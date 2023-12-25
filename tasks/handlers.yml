@@ -6,3 +6,9 @@
     restarted: true
   become: false
 
+- name: Restart monitoring
+  community.docker.docker_compose:
+    project_src: "{{ config_dir }}/monitoring/"
+    build: false
+    restarted: true
+  become: false

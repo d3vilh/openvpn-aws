@@ -1,0 +1,61 @@
+# {{ ansible_managed }}
+---
+version: "3.5"
+
+volumes:
+  prometheus_data: {}
+  grafana_data: {}
+
+networks:
+  front-tier:
+  back-tier:
+
+services:
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus:latest
+    restart: always
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention.time={{ monitoring_days_keep_interval }}'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+    volumes:
+      - ./prometheus/:/etc/prometheus/
+      - prometheus_data:/prometheus
+    ports:
+      - 9090:9090
+    networks:
+      - back-tier
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana
+    restart: always
+    env_file:
+      - ./grafana/config.monitoring
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning/:/etc/grafana/provisioning/
+    depends_on:
+      - prometheus
+    ports:
+      - 3030:3000
+    networks:
+      - back-tier
+      - front-tier
+
+  ovpn_exporter:
+    container_name: ovpn_exporter
+    image: d3vilh/openvpn_exporter:latest
+    restart: always
+    privileged: true
+    environment:
+       - OVPN_STATUS_FILE=/etc/openvpn/log/openvpn-status.log
+    volumes:
+       - ../openvpn-server/log:/etc/openvpn/log
+    ports:
+       - "9176:9176/tcp"
+    networks:
+      - back-tier

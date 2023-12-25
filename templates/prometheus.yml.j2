@@ -1,0 +1,17 @@
+---
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  scrape_timeout: 10s
+  external_labels:
+    monitor: 'Alertmanager'
+
+rule_files:
+  - 'alert.rules'
+
+scrape_configs:
+  - job_name: 'ovpn_exporter'
+    metrics_path: /metrics
+    scrape_interval: 1m
+    static_configs:
+      - targets: ['ovpn_exporter:9176']
