@@ -3,7 +3,7 @@
   community.docker.docker_compose_v2:
     project_src: "{{ config_dir }}/openvpn-server/"
     build: never
-    restarted: true
+    state: restarted
   become: false
   when: ansible_distribution == "Ubuntu"
 
@@ -11,6 +11,6 @@
   community.docker.docker_compose_v2:
     project_src: "{{ config_dir }}/monitoring/"
     build: never
-    restarted: true
+    state: restarted
   become: false
   when: ansible_distribution == "Ubuntu"
