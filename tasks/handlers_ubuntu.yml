@@ -13,4 +13,4 @@
     build: never
     state: restarted
   become: false
-  when: ansible_distribution == "Ubuntu"
+  when: ansible_distribution == "Ubuntu" and monitoring_enable

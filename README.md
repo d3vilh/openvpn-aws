@@ -43,6 +43,7 @@ For Amazon AWS will be enough:
      sudo groupadd docker
      sudo usermod -aG docker $USER
      ```
+  **RELOGIN NOW** to apply group changes.
   7. **Double check** that `ansible_user` is correct for `inventory.yml`. Need to run installtion on the remote server - follow the recomendations in config file.
      
      > **Note**: To make all necesary changes: `nano inventory.yml`, save the file - `Ctrl+O` and `Ctrl+X` to exit.
