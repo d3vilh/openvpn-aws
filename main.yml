@@ -23,17 +23,41 @@
         - ansible_facts.os_family == "Archlinux"
 
   handlers:
-    - name: Include handlers.
+    - name: Include handlers
       ansible.builtin.import_tasks: tasks/handlers.yml
+      when: ansible_distribution != "Ubuntu"
 
   tasks:
     - name: Setup Docker.
       ansible.builtin.import_tasks: tasks/docker.yml
+      when:
+        - ansible_distribution != "Ubuntu"
 
-    - name: Set up OpenVPN
+    - name: Set up OpenVPN.
       ansible.builtin.import_tasks: tasks/openvpn.yml
-      when: ovpn_enable
+      when: 
+        - ovpn_enable
+        - ansible_distribution != "Ubuntu"
 
     - name: Set up OpenVPN Monitoring.
       ansible.builtin.import_tasks: tasks/openvpn_monitoring.yml
-      when: monitoring_enable
+      when: 
+        - monitoring_enable
+        - ansible_distribution != "Ubuntu"
+
+    - name: Setup Docker (Ubuntu).
+      ansible.builtin.include_tasks: tasks/docker_ubuntu.yml
+      when:
+        - ansible_distribution == "Ubuntu"
+
+    - name: Set up OpenVPN (Ubuntu).
+      ansible.builtin.include_tasks: tasks/openvpn_ubuntu.yml
+      when: 
+        - ovpn_enable
+        - ansible_distribution == "Ubuntu"
+
+    - name: Set up OpenVPN Monitoring (Ubuntu).
+      ansible.builtin.include_tasks: tasks/openvpn_monitoring_ubuntu.yml
+      when: 
+        - monitoring_enable
+        - ansible_distribution == "Ubuntu"

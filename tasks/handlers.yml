@@ -5,6 +5,7 @@
     build: false
     restarted: true
   become: false
+  when: ansible_distribution != "Ubuntu"
 
 - name: Restart monitoring
   community.docker.docker_compose:
@@ -12,3 +13,4 @@
     build: false
     restarted: true
   become: false
+  when: ansible_distribution != "Ubuntu"

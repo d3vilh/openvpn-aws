@@ -1,0 +1,68 @@
+---
+- name: Gather package facts.
+  ansible.builtin.package_facts:
+    manager: auto
+  when: ansible_facts.userspace_bits == '32'
+
+- name: Upgrade libseccomp2 to latest version (32-bit Debian).
+  ansible.builtin.import_tasks: tasks/debian-libseccomp-update.yml
+  when:
+    - ansible_facts.os_family == "Debian"
+    - ansible_facts.userspace_bits == '32'
+    - ansible_facts.packages['libseccomp2'][0]['version'] is version('2.4.4', '<')
+
+- name: Synchronize monitoring directory.
+  ansible.posix.synchronize:
+    src: monitoring
+    dest: "{{ config_dir }}/"
+    delete: false
+    recursive: true
+    perms: false
+  become: false
+
+- name: Ensure monitoring directory is not a Git repository.
+  ansible.builtin.file:
+    path: "{{ config_dir }}/monitoring/.git/"
+    state: absent
+  become: false
+
+- name: Copy templated monitoring files into place.
+  ansible.builtin.template:
+    src: templates/{{ item.src }}
+    dest: "{{ config_dir }}/monitoring/{{ item.dest }}"
+    mode: 0644
+  loop:
+    - src: grafana-config.monitoring.j2
+      dest: grafana/config.monitoring
+    - src: prometheus.yml.j2
+      dest: prometheus/prometheus.yml
+    - src: openvpn_exporter-docker-compose.yml.j2
+      dest: docker-compose.yml
+  notify: Restart monitoring (Ubuntu)
+  become: false
+
+- name: Copy OpenVPN monitoring dashboard config to Grafana.
+  ansible.builtin.copy:
+    src: templates/openvpn-dashboard.json.j2
+    dest: "{{ config_dir }}/monitoring/grafana/provisioning/dashboards/openvpn.json"
+    mode: '0644'
+  become: false
+  notify: Restart monitoring (Ubuntu)
+  when: monitoring_enable
+
+# WA for 60sec TMO bug
+- name: Pull latest Grafana Docker image
+  community.general.docker_image:
+    source: pull
+    name: grafana/grafana
+    tag: latest
+  become: false
+
+- name: Ensure monitoring environment is running.
+  community.docker.docker_compose_v2:
+    project_src: "{{ config_dir }}/monitoring/"
+    build: never
+  become: false
+  environment:
+    DOCKER_CLIENT_TIMEOUT: '180'
+    COMPOSE_HTTP_TIMEOUT: '180'

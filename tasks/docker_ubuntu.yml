@@ -1,0 +1,30 @@
+---
+- name: Check if Docker is already present.
+  ansible.builtin.command: which docker
+  failed_when: false
+  changed_when: false
+  check_mode: false
+  register: docker_command_result
+
+- name: Install Docker and Docker Compose v2 (Ubuntu).
+  ansible.builtin.apt:
+    name:
+      - docker-compose-v2
+    state: present
+  when: ansible_distribution == "Ubuntu"
+
+- name: Ensure Docker is started.
+  ansible.builtin.service:
+    name: docker
+    state: started
+    enabled: true
+
+- name: Ensure {{ ansible_user }} user is added to the docker group.
+  ansible.builtin.user:
+    name: "{{ ansible_user }}"
+    groups: docker
+    append: true
+
+# reset_connection doesn't support conditionals.
+- name: Reset connection so docker group is picked up.
+  meta: reset_connection

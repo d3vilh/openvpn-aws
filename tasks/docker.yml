@@ -11,13 +11,15 @@
     url: https://get.docker.com/
     dest: /tmp/get-docker.sh
     mode: 0775
-  when: docker_command_result.rc == 1
+  when: 
+    - docker_command_result.rc == 1
 
 - name: Run Docker install convenience script.
   ansible.builtin.command: /tmp/get-docker.sh
   environment:
     CHANNEL: stable
-  when: docker_command_result.rc == 1
+  when: 
+    - docker_command_result.rc == 1
 
 - name: Ensure Docker is started.
   ansible.builtin.service:
@@ -32,6 +34,8 @@
       - libssl-dev
       - python3-dev
       - python3-pip
+      - python3-docker
+      - docker-compose
       - git
     state: present
   when: ansible_facts.os_family == "Debian"
@@ -43,6 +47,8 @@
       - openssl
       - base-devel
       - python-pip
+      - python3-docker
+      - docker-compose
       - git
     state: present
   when: ansible_facts.os_family == "Archlinux"
@@ -52,11 +58,6 @@
 #    name: docker-compose
 #    state: present
 #    executable: pip3
-
-- name: Install Docker Compose
-  ansible.builtin.apt:
-    name: docker-compose
-    state: present
 
 - name: Ensure {{ ansible_user }} user is added to the docker group.
   ansible.builtin.user:
