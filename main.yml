@@ -25,6 +25,13 @@
   handlers:
     - name: Include handlers.
       ansible.builtin.import_tasks: tasks/handlers.yml
+      when:
+        - ansible_distribution != "Ubuntu"
+
+    - name: Include handlers (Ubuntu).
+      ansible.builtin.import_tasks: tasks/handlers_ubuntu.yml
+      when:
+        - ansible_distribution == "Ubuntu"
 
   tasks:
     - name: Setup Docker.
