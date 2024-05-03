@@ -1,4 +1,4 @@
----
+---  
 - name: Create OpenVPN folder on Pi.
   ansible.builtin.file:
     path: "{{ config_dir }}/openvpn-server"
@@ -41,4 +41,8 @@
     project_src: "{{ config_dir }}/openvpn-server/"
     build: never
   become: false
+  when: ansible_distribution == "Ubuntu"
+
+- name: Include handlers (Ubuntu)
+  ansible.builtin.import_tasks: tasks/handlers_ubuntu.yml
   when: ansible_distribution == "Ubuntu"
