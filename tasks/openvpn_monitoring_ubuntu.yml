@@ -38,7 +38,7 @@
       dest: prometheus/prometheus.yml
     - src: openvpn_exporter-docker-compose.yml.j2
       dest: docker-compose.yml
-  notify: Restart monitoring
+  notify: Restart monitoring (Ubuntu)
   become: false
 
 - name: Copy OpenVPN monitoring dashboard config to Grafana.
@@ -47,7 +47,7 @@
     dest: "{{ config_dir }}/monitoring/grafana/provisioning/dashboards/openvpn.json"
     mode: '0644'
   become: false
-  notify: Restart monitoring
+  notify: Restart monitoring (Ubuntu)
   when: monitoring_enable
 
 # WA for 60sec TMO bug
@@ -59,7 +59,7 @@
   become: false
 
 - name: Ensure monitoring environment is running.
-  community.docker.docker_compose:
+  community.docker.docker_compose_v2:
     project_src: "{{ config_dir }}/monitoring/"
     build: false
   become: false

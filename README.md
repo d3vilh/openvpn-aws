@@ -49,7 +49,7 @@ For Amazon AWS will be enough:
 
   8. Run installation playbook:
      ```shell
-     ansible-playbook main.yml
+     sudo ansible-playbook main.yml
      ```
 > **If running locally on the EC2**: You may have error like `Error while fetching server API version` or `Permission denied`. You have to relogin and then run the playbook again.
 
