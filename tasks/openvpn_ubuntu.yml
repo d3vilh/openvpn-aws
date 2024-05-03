@@ -30,8 +30,6 @@
     - src: easy-rsa.vars.j2
       dest: config/easy-rsa.vars
   become: false
-  notify:
-    - Restart openvpn (Ubuntu) 
   when: ansible_distribution == "Ubuntu"
 
 # TODO: The first time this playbook is run, the `pi` user may not be added
