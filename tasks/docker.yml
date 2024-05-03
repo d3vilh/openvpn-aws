@@ -11,13 +11,30 @@
     url: https://get.docker.com/
     dest: /tmp/get-docker.sh
     mode: 0775
-  when: docker_command_result.rc == 1
+  when: 
+    - docker_command_result.rc == 1
+    - ansible_distribution != "Ubuntu"
 
 - name: Run Docker install convenience script.
   ansible.builtin.command: /tmp/get-docker.sh
   environment:
     CHANNEL: stable
-  when: docker_command_result.rc == 1
+  when: 
+    - docker_command_result.rc == 1
+    - ansible_distribution != "Ubuntu"
+
+- name: Install Docker Compose v1 (Debian).
+  ansible.builtin.apt:
+    name: docker-compose
+    state: present
+  when: ansible_distribution != "Ubuntu"
+
+- name: Install Docker Compose v2 (Ubuntu).
+  ansible.builtin.apt:
+    name:
+      - docker-compose-v2
+    state: present
+  when: ansible_distribution == "Ubuntu"
 
 - name: Ensure Docker is started.
   ansible.builtin.service:
@@ -52,19 +69,6 @@
 #    name: docker-compose
 #    state: present
 #    executable: pip3
-
-- name: Install Docker Compose v1 (Debian).
-  ansible.builtin.apt:
-    name: docker-compose
-    state: present
-  when: ansible_distribution != "Ubuntu"
-
-- name: Install Docker Compose v2 (Ubuntu).
-  ansible.builtin.apt:
-    name:
-      - docker-compose-v2
-    state: present
-  when: ansible_distribution == "Ubuntu"
 
 - name: Ensure {{ ansible_user }} user is added to the docker group.
   ansible.builtin.user:
