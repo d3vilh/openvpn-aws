@@ -29,7 +29,7 @@
     state: present
   when: ansible_distribution != "Ubuntu"
 
-- name: Install Docker Compose v2 (Ubuntu).
+- name: Install Docker and Docker Compose v2 (Ubuntu).
   ansible.builtin.apt:
     name:
       - docker-compose-v2

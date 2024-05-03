@@ -38,7 +38,9 @@
       dest: prometheus/prometheus.yml
     - src: openvpn_exporter-docker-compose.yml.j2
       dest: docker-compose.yml
-  notify: Restart monitoring
+  notify:
+    - Restart openvpn when ansible_distribution != "Ubuntu"
+    - Restart openvpn (Ubuntu) when ansible_distribution == "Ubuntu"
   become: false
 
 - name: Copy OpenVPN monitoring dashboard config to Grafana.
