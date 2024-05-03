@@ -57,7 +57,7 @@
   ansible.builtin.apt:
     name: docker-compose
     state: present
-when: ansible_distribution != "Ubuntu"
+  when: ansible_distribution != "Ubuntu"
 
 - name: Install Docker Compose v2 (Ubuntu).
   ansible.builtin.apt:
