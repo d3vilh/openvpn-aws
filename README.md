@@ -19,8 +19,7 @@ For Amazon AWS will be enough:
 
   1. Install [Ansible](https://docs.ansible.com/ansible) and [Git](https://git-scm.com):
      ```shell 
-     sudo apt-get install -y python3-pip git rsync
-     pip3 install ansible
+     sudo apt-get install -y python3-pip git rsync ansible
      ```
   2. Clone this repository: 
      ```shell
