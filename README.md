@@ -31,7 +31,7 @@ For Amazon AWS will be enough:
      ```
   4. Install requirements: 
      ```shell
-     ansible-galaxy collection install -r requirements.yml
+     ansible-galaxy collection install -r requirements.yml --force
      ```
      > If you see `ansible-galaxy: command not found`, you have to relogin and then try again.
   5. Make copies of the configuration files and modify them for your enviroment:

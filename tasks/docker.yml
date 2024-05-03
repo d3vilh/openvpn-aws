@@ -53,10 +53,18 @@
 #    state: present
 #    executable: pip3
 
-- name: Install Docker Compose
+- name: Install Docker Compose v1 (Debian).
   ansible.builtin.apt:
     name: docker-compose
     state: present
+when: ansible_distribution != "Ubuntu"
+
+- name: Install Docker Compose v2 (Ubuntu).
+  ansible.builtin.apt:
+    name:
+      - docker-compose-v2
+    state: present
+  when: ansible_distribution == "Ubuntu"
 
 - name: Ensure {{ ansible_user }} user is added to the docker group.
   ansible.builtin.user:
