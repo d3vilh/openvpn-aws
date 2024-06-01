@@ -6,7 +6,7 @@
 <img src="https://raw.githubusercontent.com/d3vilh/openvpn-ui/main/docs/images/OpenVPN-UI-Home.png" alt="Openvpn-ui home screen"/>
 
 # Requirements
-Any Intel or AMD x86 based computer, or x86 VM, or cloud instance with at least 1 CPU core and 512Mb RAM.
+**Any Intel or AMD x86 based computer**, or x86 VM, or cloud instance with at least 1 CPU core and 512Mb RAM.
 
 For Amazon AWS will be enough:
 - [**Amazon AWS EC2 T2 Micro Instance**](https://aws.amazon.com/ec2/instance-types/t2/) 1x CPU Core, 1Gb RAM
